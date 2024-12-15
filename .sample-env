@@ -1,0 +1,4 @@
+GITHUB_TOKEN=**************
+GITHUB_OWNER=your-user-name
+GITHUB_REPO=ram
+BASE_BRANCH=main
