@@ -58,7 +58,7 @@ const makeCommits = async (n) => {
         stdio: 'inherit',
         shell: true,
     });
-    console.log(`✅ PR merged for ${branch}`);
+    console.log(`✅ ${n} PR merged for ${branch}`);
 
     // 7️⃣ back to main
     await git.checkout('main');
