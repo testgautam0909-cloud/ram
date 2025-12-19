@@ -24,7 +24,7 @@ const makeCommits = (n) => {
       .add([path])
       .commit(date, { '--date': date }, () => {
         makeCommits(n - 1);
-      });
+      }).push();
   });
 };
 
