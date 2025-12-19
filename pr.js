@@ -6,6 +6,7 @@ import { execSync } from 'child_process';
 
 const path = './data.json';
 const git = simpleGit();
+const NUMBER_OF_PRS = 200;
 
 const makeCommits = async (n) => {
     if (n === 0) return;
@@ -58,7 +59,7 @@ const makeCommits = async (n) => {
         stdio: 'inherit',
         shell: true,
     });
-    console.log(`✅ ${n} PR merged for ${branch}`);
+    console.log(`✅ ${NUMBER_OF_PRS - n} PR merged for ${branch}`);
 
     // 7️⃣ back to main
     await git.checkout('main');
@@ -66,4 +67,4 @@ const makeCommits = async (n) => {
     await makeCommits(n - 1);
 };
 
-makeCommits(500);
+makeCommits(NUMBER_OF_PRS);
