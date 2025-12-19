@@ -32,7 +32,6 @@ const path = './data.json';
 
 
 
-markCommit(0,0)
 const markCommit = (x,y) => {
     const date = moment()
     .subtract(1, 'y')
@@ -48,3 +47,6 @@ const markCommit = (x,y) => {
         }).push();
     })
 }
+
+
+markCommit(0,0);
