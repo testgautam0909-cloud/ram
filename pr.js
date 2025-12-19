@@ -42,19 +42,22 @@ const makeCommits = async (n) => {
 
     // 4️⃣ push branch
     await git.push('origin', branch, { '--set-upstream': null });
+    const GH = process.platform === 'win32'
+        ? '"C:\\Program Files\\GitHub CLI\\gh.exe"'
+        : 'gh';
 
     // 5️⃣ create PR
-    execSync(
-  `"C:\\Program Files\\GitHub CLI\\gh.exe" pr create --base main --head ${branch} --title "${title}" --body "Automated PR"`,
-  { stdio: 'inherit' }
-);
+
+    execSync(`${GH} pr create --base main --head ${branch} --title "${title}" --body "Automated PR"`, {
+        stdio: 'inherit',
+        shell: true,
+    });
 
     // 6️⃣ merge PR
-  execSync(
-  `"C:\\Program Files\\GitHub CLI\\gh.exe" pr merge ${branch} --merge --delete-branch`,
-  { stdio: 'inherit' }
-);
-
+    execSync(`${GH} pr merge ${branch} --merge --delete-branch`, {
+        stdio: 'inherit',
+        shell: true,
+    });
     console.log(`✅ PR merged for ${branch}`);
 
     // 7️⃣ back to main
@@ -63,4 +66,4 @@ const makeCommits = async (n) => {
     await makeCommits(n - 1);
 };
 
-makeCommits(5);
+makeCommits(500);
