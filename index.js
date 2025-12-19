@@ -28,4 +28,20 @@ const makeCommits = (n) => {
   });
 };
 
-makeCommits(100);
+// makeCommits(100);
+makeCommits(0,0)
+const markCommit = (x,y) => {
+    const date = moment()
+    .subtract(1, 'y')
+    .add(x, 'w')
+    .add(y, 'd')
+    .format();
+
+    const data = { date };
+
+    jsonfile.writeFile(path, data, () => {
+        simpleGit().add([path]).commit(date, { '--date': date }, () => {
+            console.log(`Marked commit on week ${x}, day ${y}`);
+        }).push();
+    })
+}
