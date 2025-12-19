@@ -4,6 +4,7 @@ import random from 'random';
 import simpleGit from 'simple-git';
 
 const path = './data.json';
+const git = simpleGit();
 
 // const makeCommits = (n) => {
 //   if (n === 0) return;
@@ -32,21 +33,31 @@ const path = './data.json';
 
 
 
-const markCommit = (x,y) => {
-    const date = moment()
-    .subtract(1, 'y')
-    .add(x, 'w')
-    .add(y, 'd')
+const markCommit = async (x, y) => {
+  const date = moment()
+    .subtract(1, 'year')
+    .add(x, 'week')
+    .add(y, 'day')
     .format();
 
-    const data = { date };
+  const data = { date };
 
-    jsonfile.writeFile(path, data, () => {
-        simpleGit().add([path]).commit(date, { '--date': date }, () => {
-            console.log(`Marked commit on week ${x}, day ${y}`);
-        }).push();
-    })
-}
+  await jsonfile.writeFile(path, data);
+
+  await git.add([path]);
+
+  await git.commit(date, {
+    '--date': date,
+  }, {
+    env: {
+      ...process.env,
+      GIT_AUTHOR_DATE: date,
+      GIT_COMMITTER_DATE: date,
+    },
+  });
+
+  console.log(`Marked commit on week ${x}, day ${y}`);
+};
 
 
-markCommit(0,0);
+markCommit(0, 0);
