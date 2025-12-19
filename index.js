@@ -12,20 +12,12 @@ const makeCommits = (n) => {
     const y = random.int(0, 6);
 
     const date = moment()
-        .subtract(1, 'year')
+        .subtract(2, 'year')
         .add(x, 'week')
         .add(y, 'day')
         .format();
 
     const data = { date };
-
-    //   jsonfile.writeFile(path, data, () => {
-    //     simpleGit()
-    //       .add([path])
-    //       .commit(date, { '--date': date }, () => {
-    //         makeCommits(n - 1);
-    //       }).push();
-    //   });
 
     jsonfile.writeFile(path, data, async () => {
         const git = simpleGit({
@@ -47,5 +39,7 @@ const makeCommits = (n) => {
 
 
 makeCommits(100);
+
+simpleGit().push();
 
 
